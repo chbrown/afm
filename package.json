@@ -1,0 +1,16 @@
+{
+  "name": "afm",
+  "version": "0.0.1",
+  "description": "Adobe Font Metrics",
+  "keywords": [
+    "afm",
+    "adobe",
+    "font",
+    "metrics",
+    "ascii"
+  ],
+  "homepage": "https://github.com/chbrown/afm",
+  "repository": "git://github.com/chbrown/afm.git",
+  "license": "MIT",
+  "author": "Christopher Brown <io@henrian.com> (http://henrian.com)"
+}
