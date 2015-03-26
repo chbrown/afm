@@ -3,9 +3,9 @@ DOMPDF = Arial_Bold_Italic Arial_Bold Arial_Italic Arial Georgia_Bold_Italic Geo
 all: vendor/Adobe/Core14 $(DOMPDF:%=vendor/dompdf/%.afm)
 
 vendor/Adobe/Core14:
-  mkdir -p $@
-  curl https://partners.adobe.com/public/developer/en/pdf/Core14_AFMs.tar | tar -x -C $@
+	mkdir -p $@
+	curl https://partners.adobe.com/public/developer/en/pdf/Core14_AFMs.tar | tar -x -C $@
 
 vendor/dompdf/%.afm:
-  mkdir -p $(dir $@)
-  curl https://raw.githubusercontent.com/dompdf/dompdf/dfc72f0/lib/fonts/$*.afm > $@
+	mkdir -p $(dir $@)
+	curl https://raw.githubusercontent.com/dompdf/dompdf/dfc72f0/lib/fonts/$*.afm > $@
