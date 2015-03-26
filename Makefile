@@ -1,4 +1,5 @@
 DOMPDF = Arial_Bold_Italic Arial_Bold Arial_Italic Arial Georgia_Bold_Italic Georgia_Bold Georgia_Italic Georgia lucon slkscr slkscrb slkscre slkscreb Times_New_Roman_Bold_Italic Times_New_Roman_Bold Times_New_Roman_Italic Times_New_Roman Trebuchet_MS_Bold_Italic Trebuchet_MS_Bold Trebuchet_MS_Italic Trebuchet_MS Verdana_Bold_Italic Verdana_Bold Verdana_Italic Verdana
+AFM = vendor/Adobe/Core14/*.afm vendor/dompdf/*.afm
 
 all: vendor/Adobe/Core14 $(DOMPDF:%=vendor/dompdf/%.afm)
 
@@ -9,3 +10,6 @@ vendor/Adobe/Core14:
 vendor/dompdf/%.afm:
 	mkdir -p $(dir $@)
 	curl https://raw.githubusercontent.com/dompdf/dompdf/dfc72f0/lib/fonts/$*.afm > $@
+
+fonts:
+	awk '/^FontName/ { sub(/\r/, ""); print $$2 "\t" FILENAME}' $(AFM) | sort > $@
