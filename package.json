@@ -1,6 +1,6 @@
 {
   "name": "afm",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Adobe Font Metrics",
   "keywords": [
     "afm",
@@ -15,5 +15,6 @@
   "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
   "devDependencies": {
     "typescript": "*"
-  }
+  },
+  "scripts": {}
 }
