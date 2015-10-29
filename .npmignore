@@ -1,0 +1,6 @@
+index.ts
+Makefile
+parse.ts
+tsconfig.json
+vendor/Adobe/Core14/*.afm
+vendor/dompdf/*.afm

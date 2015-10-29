@@ -10,11 +10,13 @@
     "ascii"
   ],
   "homepage": "https://github.com/chbrown/afm",
-  "repository": "git://github.com/chbrown/afm.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chbrown/afm.git"
+  },
   "license": "MIT",
   "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
   "devDependencies": {
     "typescript": "*"
-  },
-  "scripts": {}
+  }
 }
