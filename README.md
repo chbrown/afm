@@ -1,17 +1,39 @@
-> `C integer`: Decimal value of default character code (−1 if not encoded).
-> `CH` hex`: Same as C, but the character code is given in hexadecimal.
-               Either C or CH is required
-> `WX number`: Width of character.
-> `N name`: (Optional.) PostScript language character name.
+# afm
 
-for FILE in **/*.afm; do
-  echo $(sed -n 's/FontName \(.*\)/\1/p' $FILE) $FILE
-done
+Collection of AFM (Adobe Font Metrics) specifications in JSON format, with CommonJS JavaScript API.
 
-awk '/^FontName/ { sub(/\r/, ""); print $2, FILENAME}' **/*.afm
 
-perl -n -e'/test(\d+)/ && print $1'
+## Example
 
-var afm = require('afm');
-afm.names;
-afm.loadFontMetricsSync('ArialMT');
+```javascript
+var afm = require('afm')
+afm.fonts.ArialMT
+```
+
+
+## Development
+
+To (re)fetch the original files at `vendor/**/*.afm` from the internet:
+
+```shell
+make
+```
+
+To (re)generate the JSON files by parsing the character metrics for each AFM file in the repository:
+
+```shell
+npm run prepublishOnly
+```
+
+
+## References
+
+* ["What can I do with AFM - Adobe font metrics file?"](https://graphicdesign.stackexchange.com/q/2564) from StackExchange: Graphic Design
+* [Font technical notes](https://www.adobe.com/devnet/font.html)
+  - [Adobe Font Metrics File Format Specification #5004](https://www.adobe.com/content/dam/acom/en/devnet/font/pdfs/5004.AFM_Spec.pdf)
+
+
+## License
+
+Copyright 2015–2018 Christopher Brown.
+[MIT Licensed](https://chbrown.github.io/licenses/MIT/#2015-2018).
