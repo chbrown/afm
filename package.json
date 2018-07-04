@@ -21,6 +21,7 @@
     "typescript": "^2.9.2"
   },
   "scripts": {
-    "prepare": "tsc -d"
+    "prepare": "tsc -d",
+    "prepublishOnly": "find vendor -name '*.afm' | sed 's/afm$//g' | xargs -I % node parse %afm %json"
   }
 }

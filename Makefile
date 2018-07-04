@@ -11,7 +11,3 @@ vendor/Adobe/Core14:
 vendor/dompdf/%.afm:
 	mkdir -p $(@D)
 	curl https://raw.githubusercontent.com/dompdf/dompdf/dfc72f0/lib/fonts/$*.afm > $@
-
-# find vendor -name '*.afm' -print0 | sed 's/afm$/json/g' | xargs -0 make
-vendor/%.json: vendor/%.afm
-	node parse.js <$< >$@
