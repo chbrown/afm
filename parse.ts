@@ -1,3 +1,5 @@
+import {createReadStream, createWriteStream} from 'fs'
+
 interface CharMetrics {
   charCode: number
   width: number
@@ -23,7 +25,7 @@ From https://partners.adobe.com/public/developer/en/font/5004.AFM_Spec.pdf:
 > `WX number`: Width of character.
 > `N name`:    (Optional.) PostScript language character name.
 */
-function parseCharMetrics(line: string): CharMetrics {
+export function parseCharMetrics(line: string): CharMetrics {
   const charCode_match = line.match(/C\s+(\d+|-1)/)
   const width_match = line.match(/WX\s+(\d+)/)
   const name_match = line.match(/N\s+(\w+)/)
@@ -38,7 +40,7 @@ parseFontMetrics() takes an entire AFM file as a string, finds the
 "CharMetrics" section, and parses all of the char metrics lines from that
 section, returning an Array of those charmetrics.
 */
-function parseFontMetrics(data: string): CharMetrics[] {
+export function parseFontMetrics(data: string): CharMetrics[] {
   const start_match = data.match(/^StartCharMetrics\s+(\d+)/m)
   const end_match = data.match(/^EndCharMetrics/m)
   const char_metrics_start = start_match.index + start_match[0].length
@@ -48,17 +50,29 @@ function parseFontMetrics(data: string): CharMetrics[] {
 }
 
 /**
-reads an AFM file included in this repository and parses the character metrics
-defined in that file.
+Parse Adobe Font Metrics data from inputStream
+and write array of CharMetrics objects to outputStream as JSON.
 */
-if (require.main === module) {
-  const chunks = []
-  process.stdin.setEncoding('ascii')
-  .on('data', chunk => chunks.push(chunk))
+export function convert(inputStream: NodeJS.ReadableStream,
+                        outputStream: NodeJS.WritableStream,
+                        callback: (error: Error) => void) {
+  const chunks: Buffer[] = []
+  inputStream
+  .on('data', chunk => { chunks.push(chunk) })
   .on('end', () => {
-    const data = chunks.join('')
+    const data = Buffer.concat(chunks).toString('ascii')
     const charMetrics = parseFontMetrics(data)
     const json = JSON.stringify(charMetrics)
-    process.stdout.write(json)
+    outputStream.write(json)
+  })
+}
+
+if (require.main === module) {
+  const [, , input_argument, output_argument] = process.argv
+  const inputStream = input_argument ? createReadStream(input_argument) : process.stdin
+  const outputStream = output_argument ? createWriteStream(output_argument) : process.stdout
+  convert(inputStream, outputStream, error => {
+    if (error) throw error
+    process.exit()
   })
 }
