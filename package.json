@@ -18,5 +18,8 @@
   "author": "Christopher Brown <io@henrian.com> (http://henrian.com)",
   "devDependencies": {
     "typescript": "^2.9.2"
+  },
+  "scripts": {
+    "prepare": "tsc -d"
   }
 }
