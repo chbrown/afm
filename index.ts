@@ -1,9 +1,7 @@
-declare var require: { (id: string): any; };
-
 export interface CharMetrics {
-  charCode: number;
-  width: number;
-  name: string;
+  charCode: number
+  width: number
+  name: string
 }
 
 export const fonts: {[index: string]: CharMetrics[]} = {
@@ -48,5 +46,5 @@ export const fonts: {[index: string]: CharMetrics[]} = {
   'Verdana-Bold': require('./vendor/dompdf/Verdana_Bold'),
   'Verdana-BoldItalic': require('./vendor/dompdf/Verdana_Bold_Italic'),
   'Verdana-Italic': require('./vendor/dompdf/Verdana_Italic'),
-  'ZapfDingbats': require('./vendor/Adobe/Core14/ZapfDingbats')
-};
+  'ZapfDingbats': require('./vendor/Adobe/Core14/ZapfDingbats'),
+}

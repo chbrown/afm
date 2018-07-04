@@ -1,13 +1,7 @@
-declare var process: { stdout: any; stdin: any };
-declare var require: { (id: string): any; main: any };
-declare var module: any;
-
-var fs = require('fs');
-
 interface CharMetrics {
-  charCode: number;
-  width: number;
-  name: string;
+  charCode: number
+  width: number
+  name: string
 }
 
 /**
@@ -30,17 +24,13 @@ From https://partners.adobe.com/public/developer/en/font/5004.AFM_Spec.pdf:
 > `N name`:    (Optional.) PostScript language character name.
 */
 function parseCharMetrics(line: string): CharMetrics {
-  var charCode_match = line.match(/C\s+(\d+|-1)/);
-  var width_match = line.match(/WX\s+(\d+)/);
-  var name_match = line.match(/N\s+(\w+)/);
-  var charCode = charCode_match ? parseInt(charCode_match[1], 10) : null;
-  var width = width_match ? parseInt(width_match[1], 10) : null;
-  var name = name_match ? name_match[1] : null;
-  return {
-    charCode: charCode,
-    width: width,
-    name: name,
-  };
+  const charCode_match = line.match(/C\s+(\d+|-1)/)
+  const width_match = line.match(/WX\s+(\d+)/)
+  const name_match = line.match(/N\s+(\w+)/)
+  const charCode = charCode_match ? parseInt(charCode_match[1], 10) : null
+  const width = width_match ? parseInt(width_match[1], 10) : null
+  const name = name_match ? name_match[1] : null
+  return {charCode, width, name}
 }
 
 /**
@@ -49,12 +39,12 @@ parseFontMetrics() takes an entire AFM file as a string, finds the
 section, returning an Array of those charmetrics.
 */
 function parseFontMetrics(data: string): CharMetrics[] {
-  var start_match = data.match(/^StartCharMetrics\s+(\d+)/m);
-  var end_match = data.match(/^EndCharMetrics/m);
-  var char_metrics_start = start_match.index + start_match[0].length;
-  var char_metrics_data = data.slice(char_metrics_start, end_match.index);
-  var char_metrics_lines = char_metrics_data.trim().split(/\r\n|\r|\n|\t/);
-  return char_metrics_lines.map(parseCharMetrics);
+  const start_match = data.match(/^StartCharMetrics\s+(\d+)/m)
+  const end_match = data.match(/^EndCharMetrics/m)
+  const char_metrics_start = start_match.index + start_match[0].length
+  const char_metrics_data = data.slice(char_metrics_start, end_match.index)
+  const char_metrics_lines = char_metrics_data.trim().split(/\r\n|\r|\n|\t/)
+  return char_metrics_lines.map(parseCharMetrics)
 }
 
 /**
@@ -62,13 +52,13 @@ reads an AFM file included in this repository and parses the character metrics
 defined in that file.
 */
 if (require.main === module) {
-  var chunks = [];
+  const chunks = []
   process.stdin.setEncoding('ascii')
   .on('data', chunk => chunks.push(chunk))
   .on('end', () => {
-    var data = chunks.join('');
-    var charMetrics = parseFontMetrics(data);
-    var json = JSON.stringify(charMetrics);
-    process.stdout.write(json);
-  });
+    const data = chunks.join('')
+    const charMetrics = parseFontMetrics(data)
+    const json = JSON.stringify(charMetrics)
+    process.stdout.write(json)
+  })
 }
