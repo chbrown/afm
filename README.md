@@ -1,6 +1,15 @@
 # afm
 
+[![latest version published to npm](https://badge.fury.io/js/afm.svg)](https://www.npmjs.com/package/afm)
+
 Collection of AFM (Adobe Font Metrics) specifications in JSON format, with CommonJS JavaScript API.
+
+
+## Installation
+
+```shell
+npm install afm
+```
 
 
 ## Example
